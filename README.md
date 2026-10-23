@@ -22,78 +22,62 @@ STEP-5: Display the cipher text obtained above.
 #include <string.h>
 #include <ctype.h>
 
-void main()
+int main()
 {
-    char plain1[10], cipher1[10];
-    char plain2[10], cipher2[10];
+    char plain[100], cipher[100];
     int key, i, length;
 
-    printf("\n Enter the first plain text: ");
-    scanf("%9s", plain1);
+    printf("\nEnter the plain text: ");
+    fgets(plain, sizeof(plain), stdin);
 
-    printf("\n Enter the second plain text: ");
-    scanf("%9s", plain2);
+    plain[strcspn(plain, "\n")] = '\0';
 
-    printf("\n Enter the key value: ");
+    printf("Enter the key value: ");
     scanf("%d", &key);
 
-    printf("\n\t PLAIN TEXT 1: %s", plain1);
-    printf("\n\t ENCRYPTED TEXT 1: ");
+    key = ((key % 26) + 26) % 26;
+    length = strlen(plain);
 
-    length = strlen(plain1);
-
-    for (i = 0; i < length; i++)
-    {
-        cipher1[i] = plain1[i] + key;
-
-        if (isupper(plain1[i]) && cipher1[i] > 'Z')
-            cipher1[i] -= 26;
-
-        if (islower(plain1[i]) && cipher1[i] > 'z')
-            cipher1[i] -= 26;
-
-        printf("%c", cipher1[i]);
-    }
-    cipher1[length] = '\0';
-
-    printf("\n\t AFTER DECRYPTION 1: ");
-
-    for (i = 0; i < length; i++)
-        printf("%c", cipher1[i] - key);
-
-    printf("\n\n\t PLAIN TEXT 2: %s", plain2);
-    printf("\n\t ENCRYPTED TEXT 2: ");
-
-    length = strlen(plain2);
+    printf("\nPLAIN TEXT: %s", plain);
+    printf("\nENCRYPTED TEXT: ");
 
     for (i = 0; i < length; i++)
     {
-        cipher2[i] = plain2[i] + key;
+        if (isupper((unsigned char)plain[i]))
+            cipher[i] = (plain[i] - 'A' + key) % 26 + 'A';
+        else if (islower((unsigned char)plain[i]))
+            cipher[i] = (plain[i] - 'a' + key) % 26 + 'a';
+        else
+            cipher[i] = plain[i];
 
-        if (isupper(plain2[i]) && cipher2[i] > 'Z')
-            cipher2[i] -= 26;
-
-        if (islower(plain2[i]) && cipher2[i] > 'z')
-            cipher2[i] -= 26;
-
-        printf("%c", cipher2[i]);
+        printf("%c", cipher[i]);
     }
-    cipher2[length] = '\0';
 
-    printf("\n\t AFTER DECRYPTION 2: ");
+    cipher[length] = '\0';
+
+    printf("\nAFTER DECRYPTION: ");
 
     for (i = 0; i < length; i++)
-        printf("%c", cipher2[i] - key);
+    {
+        if (isupper((unsigned char)cipher[i]))
+            plain[i] = (cipher[i] - 'A' - key + 26) % 26 + 'A';
+        else if (islower((unsigned char)cipher[i]))
+            plain[i] = (cipher[i] - 'a' - key + 26) % 26 + 'a';
+        else
+            plain[i] = cipher[i];
+
+        printf("%c", plain[i]);
+    }
 
     printf("\n");
+    return 0;
 }
 
 ```
 
 ## OUTPUT:
 
-<img width="1895" height="890" alt="image" src="https://github.com/user-attachments/assets/233453c5-3433-49c9-b541-a708f4616519" />
-
+<img width="1916" height="890" alt="image" src="https://github.com/user-attachments/assets/29c86807-b81a-423c-a3f8-addd339c648e" />
 
 ## RESULT :
  Thus the implementation of ceasar cipher had been executed successfully.

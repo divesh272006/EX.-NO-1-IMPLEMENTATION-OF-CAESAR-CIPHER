@@ -22,38 +22,77 @@ STEP-5: Display the cipher text obtained above.
 #include <string.h>
 #include <ctype.h>
 
-int main()
+void main()
 {
-    char text[100];
-    int key, i;
+    char plain1[10], cipher1[10];
+    char plain2[10], cipher2[10];
+    int key, i, length;
 
-    printf("Enter the plain text: ");
-    fgets(text, sizeof(text), stdin);
+    printf("\n Enter the first plain text: ");
+    scanf("%9s", plain1);
 
-    printf("Enter the key: ");
+    printf("\n Enter the second plain text: ");
+    scanf("%9s", plain2);
+
+    printf("\n Enter the key value: ");
     scanf("%d", &key);
 
-    key = ((key % 26) + 26) % 26;
+    printf("\n\t PLAIN TEXT 1: %s", plain1);
+    printf("\n\t ENCRYPTED TEXT 1: ");
 
-    for (i = 0; text[i] != '\0'; i++)
+    length = strlen(plain1);
+
+    for (i = 0; i < length; i++)
     {
-        if (isupper((unsigned char)text[i]))
-            text[i] = (text[i] - 'A' + key) % 26 + 'A';
+        cipher1[i] = plain1[i] + key;
 
-        else if (islower((unsigned char)text[i]))
-            text[i] = (text[i] - 'a' + key) % 26 + 'a';
+        if (isupper(plain1[i]) && cipher1[i] > 'Z')
+            cipher1[i] -= 26;
+
+        if (islower(plain1[i]) && cipher1[i] > 'z')
+            cipher1[i] -= 26;
+
+        printf("%c", cipher1[i]);
     }
+    cipher1[length] = '\0';
 
-    printf("Cipher text: %s", text);
+    printf("\n\t AFTER DECRYPTION 1: ");
 
-    return 0;
+    for (i = 0; i < length; i++)
+        printf("%c", cipher1[i] - key);
+
+    printf("\n\n\t PLAIN TEXT 2: %s", plain2);
+    printf("\n\t ENCRYPTED TEXT 2: ");
+
+    length = strlen(plain2);
+
+    for (i = 0; i < length; i++)
+    {
+        cipher2[i] = plain2[i] + key;
+
+        if (isupper(plain2[i]) && cipher2[i] > 'Z')
+            cipher2[i] -= 26;
+
+        if (islower(plain2[i]) && cipher2[i] > 'z')
+            cipher2[i] -= 26;
+
+        printf("%c", cipher2[i]);
+    }
+    cipher2[length] = '\0';
+
+    printf("\n\t AFTER DECRYPTION 2: ");
+
+    for (i = 0; i < length; i++)
+        printf("%c", cipher2[i] - key);
+
+    printf("\n");
 }
 
 ```
 
 ## OUTPUT:
 
-<img width="1917" height="871" alt="image" src="https://github.com/user-attachments/assets/f76ffee0-f3f0-4ec7-9b2a-7b699600078c" />
+<img width="1895" height="890" alt="image" src="https://github.com/user-attachments/assets/233453c5-3433-49c9-b541-a708f4616519" />
 
 
 ## RESULT :
